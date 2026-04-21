@@ -1,72 +1,61 @@
 # Requirement
 
-帮我把这个项目转写成js
+帮我把项目重写城go 语言
 
 **AI Understanding:**
-Based on my analysis of the Python codebase, I understand this is a **Huobi cryptocurrency exchange data fetching project** that uses WebSocket connections to retrieve k-line (candlestick) data. Here's what the current Python project does:
-## Current Python Implementation
-- **WebSocket client** that connects to Huobi's API
-- **Fetches historical k-line data** via `req` method and **subscribes to real-time data** via `sub` method
-- **Stores data in MySQL database** with table structure for each symbol/period combination
-- **Handles message compression** (zlib) and ping-pong heartbeat
-- **Configurable** via INI files for exchange URLs and MySQL parameters
-## JavaScript Conversion Plan
-To convert this to JavaScript, I'll need to make some technology stack decisions. Here are the key questions:
-1. **Database choice**: Should I keep MySQL or switch to a more Node.js-friendly option like MongoDB/SQLite?
-2. **WebSocket library**: Use native `ws` or a higher-level library like `socket.io`?
-3. **Configuration management**: Keep INI files or switch to JSON/JavaScript config?
-4. **Logging**: Use `winston`/`bunyan` or keep the current YAML-based logging?
-5. **Package management**: Use npm/yarn with `package.json`?
-**Clarifying question**: Do you want a direct 1:1 conversion maintaining the same architecture, or are you open to modernizing the approach with more Node.js-idiomatic patterns?
-Once you confirm the approach, I'll generate a complete implementation plan. Type "start" or "proceed" when you're ready.
+我了解了您的项目需求。您希望将这个火币数据抓取项目从JavaScript/Node.js重写为Go语言。
+根据我的分析，当前项目是一个基于Node.js的火币加密货币交易所数据抓取工具，具有以下主要功能：
+**项目核心功能：**
+- WebSocket连接火币API
+- 获取历史K线数据
+- 实时订阅K线数据
+- MySQL数据库存储
+- 配置文件管理（INI/YAML）
+- 消息压缩解压缩（zlib）
+- 错误处理和重连机制
+**技术栈现状：**
+- Node.js + WebSocket
+- MySQL数据库
+- INI/YAML配置文件
+- zlib压缩
+**重写为Go语言需要考虑：**
+1. 使用Go的WebSocket库替代Node.js的ws
+2. 使用Go的数据库驱动替代mysql2
+3. 使用Go的标准库或第三方库处理INI/YAML配置
+4. 使用Go的zlib包处理压缩
+5. 保持相同的功能逻辑和数据库结构
+**澄清问题：**
+您希望在Go语言版本中保持完全相同的功能，还是希望在重写过程中进行一些优化或功能调整？
+当您确认需求后，请告诉我"start"或"proceed"，我将为您生成详细的Go语言重写实现计划。
 
-keep MySQL，native ws，Keep INI files ，YAML-based logging，Use npm
+Go语言版本中保持完全相同的功能
 
 **AI Understanding:**
-Perfect! I now have a complete understanding of the Python Huobi data fetching project. Here's my analysis and conversion plan:
-## Current Python Project Structure
-- **FetchClient.py**: Main WebSocket client that connects to Huobi API and fetches k-line data
-- **MessageFormat.py**: Handles message compression/decompression and ping-pong heartbeat
-- **sql_connection.py**: MySQL database operations for storing k-line data
-- **main_test.py**: Entry point with configuration
-- **Configuration files**: INI files for MySQL and exchange settings, YAML for logging
-## JavaScript Conversion Plan
-Based on your requirements (MySQL, native ws, INI files, YAML logging, npm), here's the exact conversion:
-### Core Components to Convert:
-1. **WebSocket Client** (`ws` library) - replacing `websocket` Python module
-2. **Message Handler** - replacing `MessageFormat.py` with zlib compression
-3. **MySQL Database** - using `mysql2` or `mysql` npm package
-4. **Configuration Management** - INI files with `ini` package, YAML with `js-yaml`
-5. **Logging** - YAML-based with `winston` or custom logger
-### Key Technical Decisions:
-- **Database**: `mysql2` (better performance than `mysql`)
-- **WebSocket**: Native `ws` library 
-- **Configuration**: `ini` package for INI files, `js-yaml` for YAML
-- **Logging**: Custom implementation with YAML config support
-- **Package Manager**: npm with `package.json`
-### Project Structure:
-```
-huobi-js/
-├── src/
-│   ├── FetchClient.js
-│   ├── MessageFormat.js
-│   ├── sqlConnection.js
-│   └── index.js
-├── config/
-│   ├── mysql_params.ini
-│   ├── exchanges_config.ini
-│   └── log_config.yaml
-├── package.json
-└── README.md
-```
-The conversion will maintain the exact same functionality:
-- WebSocket connection to Huobi API
-- K-line data fetching (both historical via `req` and real-time via `sub`)
-- MySQL database storage with same table structure
-- Message compression/decompression
-- Ping-pong heartbeat
-- YAML-based logging
-**Ready to proceed?** Type "start" or "proceed" and I'll generate the complete JavaScript implementation with all the necessary files and package.json setup.
+基于对现有Node.js项目的完整分析，我现在完全理解了您需要重写的功能。这是一个完整的火币加密货币交易所数据抓取工具，具有以下核心功能：
+**项目完整功能分析：**
+1. **WebSocket通信** - 连接火币API，支持历史数据获取和实时订阅
+2. **数据压缩处理** - 使用zlib处理WebSocket消息的压缩/解压缩
+3. **MySQL数据库** - 存储K线数据，支持创建表、插入、更新、删除操作
+4. **配置管理** - INI格式的数据库配置和YAML格式的日志配置
+5. **错误处理** - 包含重连机制和异常处理
+6. **日志系统** - 基于YAML配置的日志记录
+7. **心跳机制** - WebSocket ping-pong保持连接
+**Go语言重写将保持完全相同的功能，包括：**
+- 相同的WebSocket通信逻辑
+- 相同的数据库表结构和操作
+- 相同的配置文件和格式
+- 相同的错误处理和重连机制
+- 相同的压缩解压缩功能
+- 相同的日志系统
+**技术栈转换：**
+- Node.js ws → Go gorilla/websocket 或标准库
+- mysql2 → Go database/sql + MySQL驱动
+- ini/yaml → Go viper 或标准解析库
+- zlib → Go compress/zlib
+- 保持相同的项目结构和文件组织
+**确认需求：**
+您希望在Go语言版本中保持与现有Node.js项目完全相同的功能，不进行任何功能调整或优化。
+当您确认后，请告诉我"start"或"proceed"，我将为您生成详细的Go语言重写实现计划。
 
 ---
 
